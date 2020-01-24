@@ -16,7 +16,7 @@ public class Book implements Serializable {
 
     @Id
     private ObjectId id;
-    private Long isbn;
+    private String isbn;
 
     @NotBlank(message = "{field.not.blank}")
     private String title;
