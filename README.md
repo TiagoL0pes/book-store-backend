@@ -8,6 +8,8 @@ A book store back-end Java Project, using Spring Framework to provide web functi
 - Spring Boot
 - Spring MVC
 - Spring Data JPA (MongoDB)
+- Spring Security
+- JWT
 - Maven
 
 ## Installation

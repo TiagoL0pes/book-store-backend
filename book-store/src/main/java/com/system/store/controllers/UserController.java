@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDto> add(@RequestBody User user) {
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         repository.save(user);
         return ResponseEntity.ok(new UserDto(user));
     }
@@ -51,7 +53,7 @@ public class UserController {
         if (optional.isPresent()) {
             User userSaved = optional.get();
             userSaved.setEmail(user.getEmail());
-            userSaved.setPassword(user.getPassword());
+            userSaved.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             repository.save(userSaved);
             return ResponseEntity.ok(new UserDto(userSaved));
         }
