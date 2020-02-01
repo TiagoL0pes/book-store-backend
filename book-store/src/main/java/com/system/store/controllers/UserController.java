@@ -1,8 +1,8 @@
 package com.system.store.controllers;
 
-import com.system.store.dtos.AuthorDto;
-import com.system.store.models.Author;
-import com.system.store.repositories.AuthorRepository;
+import com.system.store.dtos.UserDto;
+import com.system.store.models.User;
+import com.system.store.repositories.UserRepository;
 import java.util.Collection;
 import java.util.Optional;
 import org.bson.types.ObjectId;
@@ -18,42 +18,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/authors")
-public class AuthorController {
+@RequestMapping("/users")
+public class UserController {
 
     @Autowired
-    private AuthorRepository repository;
+    private UserRepository repository;
 
     @PostMapping
-    public ResponseEntity<AuthorDto> add(@RequestBody Author author) {
-        repository.save(author);
-        return ResponseEntity.ok(new AuthorDto(author));
+    public ResponseEntity<UserDto> add(@RequestBody User user) {
+        repository.save(user);
+        return ResponseEntity.ok(new UserDto(user));
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<AuthorDto> find(@PathVariable ObjectId id) {
-        Optional<Author> optional = repository.findById(id);
+    public ResponseEntity<UserDto> find(@PathVariable ObjectId id) {
+        Optional<User> optional = repository.findById(id);
         if (optional.isPresent()) {
-            return ResponseEntity.ok(new AuthorDto(optional.get()));
+            return ResponseEntity.ok(new UserDto(optional.get()));
         }
 
         return ResponseEntity.notFound().build();
     }
 
     @GetMapping
-    public ResponseEntity<Collection<AuthorDto>> listAll() {
-        return ResponseEntity.ok(AuthorDto.toList(repository.findAll()));
+    public ResponseEntity<Collection<UserDto>> listAll() {
+        return ResponseEntity.ok(UserDto.toList(repository.findAll()));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<AuthorDto> update(@RequestBody Author author, @PathVariable ObjectId id) {
-        Optional<Author> optional = repository.findById(id);
+    public ResponseEntity<UserDto> update(@RequestBody User user, @PathVariable ObjectId id) {
+        Optional<User> optional = repository.findById(id);
         if (optional.isPresent()) {
-            Author authorSaved = optional.get();
-            authorSaved.setName(author.getName());
-            authorSaved.setEmail(author.getEmail());
-            repository.save(authorSaved);
-            return ResponseEntity.ok(new AuthorDto(authorSaved));
+            User userSaved = optional.get();
+            userSaved.setEmail(user.getEmail());
+            userSaved.setPassword(user.getPassword());
+            repository.save(userSaved);
+            return ResponseEntity.ok(new UserDto(userSaved));
         }
 
         return ResponseEntity.notFound().build();
@@ -61,7 +61,7 @@ public class AuthorController {
 
     @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable ObjectId id) {
-        Optional<Author> optional = repository.findById(id);
+        Optional<User> optional = repository.findById(id);
         if (optional.isPresent()) {
             repository.delete(optional.get());
             return ResponseEntity.ok().build();

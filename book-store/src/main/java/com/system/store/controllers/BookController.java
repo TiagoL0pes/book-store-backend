@@ -51,7 +51,7 @@ public class BookController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/list")
+    @GetMapping
     public ResponseEntity<Collection<BookDto>> listAll() {
         return ResponseEntity.ok(BookDto.toList(repository.findAll()));
     }
