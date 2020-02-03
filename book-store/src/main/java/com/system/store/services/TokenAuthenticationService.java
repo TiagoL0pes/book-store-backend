@@ -16,7 +16,6 @@ public class TokenAuthenticationService {
 
     static final long EXPIRATION_TIME = 900_000;
     static final String SECRET = "Secret";
-    static final String TOKEN_PREFIX = "Bearer";
     static final String HEADER_STRING = "Authorization";
 
     public static void addAuthentication(HttpServletResponse response, String username) {
@@ -26,7 +25,7 @@ public class TokenAuthenticationService {
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
 
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
+        response.addHeader(HEADER_STRING, JWT);
     }
 
     public static Authentication getAuthentication(HttpServletRequest request) {
@@ -35,7 +34,7 @@ public class TokenAuthenticationService {
         if (token != null) {
             String user = Jwts.parser()
                     .setSigningKey(SECRET)
-                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                    .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
 
