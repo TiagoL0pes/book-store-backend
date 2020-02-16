@@ -1,5 +1,6 @@
 package com.system.store.models;
 
+import com.system.store.helpers.NullAllowed;
 import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class Book implements Serializable {
     private ObjectId id;
     private String isbn;
 
-    @NotBlank(message = "{field.not.blank}")
+    @NotBlank(message = "{field.not.blank}", groups = NullAllowed.class)
     private String title;
 
     @DBRef

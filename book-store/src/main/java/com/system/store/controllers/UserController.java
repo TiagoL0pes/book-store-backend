@@ -27,6 +27,11 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDto> add(@RequestBody User user) {
+        Optional<User> optional = repository.findByEmail(user.getEmail());
+        if (optional.isPresent()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         repository.save(user);
         return ResponseEntity.ok(new UserDto(user));
