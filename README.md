@@ -39,14 +39,19 @@ You need start mongoDB before to start api. You can run `mongod` in your termina
 
 The app defines following REST structure for all endpoints.
 
+    Add new resource
     POST /resource
     
+    Get all resources
     GET /resource
     
+    Get resource by id
     GET /resource/{id}
     
+    Update resource by id
     PUT /resource/{id}
     
+    Delete resource by id
     DELETE /resource/{id}
 
 You can test them using postman or any other rest client.
