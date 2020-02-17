@@ -33,4 +33,20 @@ server.servlet.context-path=/book-store
 ```
 
 ## How to use the API
-Run the project through the IDE and head out to [http://localhost:8080/book-store](http://localhost:8080/book-store)
+You need start mongoDB before to start api. You can run `mongod` in your terminal to start database, then, you run the project through the your preferred IDE and head out to [http://localhost:8080/book-store](http://localhost:8080/book-store)
+
+## REST API Structure
+
+The app defines following REST structure for all endpoints.
+
+    POST /resource
+    
+    GET /resource
+    
+    GET /resource/{id}
+    
+    PUT /resource/{id}
+    
+    DELETE /resource/{id}
+
+You can test them using postman or any other rest client.
