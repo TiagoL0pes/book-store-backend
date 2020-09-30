@@ -4,6 +4,7 @@ A book store back-end Java Project, using Spring Framework to provide web functi
 	
 ## Technologies used:
 - Java 1.8
+- Junit 5
 - Lombok
 - Spring Boot
 - Spring MVC
