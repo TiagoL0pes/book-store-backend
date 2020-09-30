@@ -21,7 +21,7 @@ public class AuthorDto {
     public static Collection<AuthorDto> toList(Collection<Author> collection) {
         return collection
                 .stream()
-                .map(author -> new AuthorDto(author))
+                .map(AuthorDto::new)
                 .collect(Collectors.toList());
     }
 }

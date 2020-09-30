@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
 
     @Autowired
-    private BookRepository repository;
+    private BookRepository bookRepository;
 
     @Autowired
     private AuthorRepository authorRepository;
@@ -38,7 +38,7 @@ public class BookController {
         Optional<Author> optional = authorRepository.findById(book.getAuthor().getId());
         if (optional.isPresent()) {
             book.setAuthor(optional.get());
-            repository.save(book);
+            bookRepository.save(book);
             return ResponseEntity.ok(new BookDto(book));
         }
 
@@ -47,7 +47,7 @@ public class BookController {
 
     @GetMapping("{id}")
     public ResponseEntity<BookDto> find(@PathVariable ObjectId id, @RequestHeader Map<String, String> headers) {
-        Optional<Book> optional = repository.findById(id);
+        Optional<Book> optional = bookRepository.findById(id);
         if (optional.isPresent()) {
             return ResponseEntity.ok(new BookDto(optional.get()));
         }
@@ -57,25 +57,23 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<Collection<BookDto>> listAll() {
-        return ResponseEntity.ok(BookDto.toList(repository.findAll()));
+        return ResponseEntity.ok(BookDto.toList(bookRepository.findAll()));
     }
 
     @PutMapping("{id}")
     public ResponseEntity<BookDto> update(@RequestBody Book book, @PathVariable ObjectId id) {
         if (book.getAuthor() != null) {
             Optional<Author> authorOptional = authorRepository.findById(book.getAuthor().getId());
-            if (authorOptional.isPresent()) {
-                book.setAuthor(authorOptional.get());
-            }
+            authorOptional.ifPresent(book::setAuthor);
         }
 
-        Optional<Book> optional = repository.findById(id);
+        Optional<Book> optional = bookRepository.findById(id);
         if (optional.isPresent()) {
             Book bookSaved = optional.get();
             bookSaved.setIsbn(book.getIsbn());
             bookSaved.setTitle(book.getTitle());
             bookSaved.setAuthor(book.getAuthor());
-            repository.save(bookSaved);
+            bookRepository.save(bookSaved);
             return ResponseEntity.ok(new BookDto(bookSaved));
         }
 
@@ -84,9 +82,9 @@ public class BookController {
 
     @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable ObjectId id) {
-        Optional<Book> optional = repository.findById(id);
+        Optional<Book> optional = bookRepository.findById(id);
         if (optional.isPresent()) {
-            repository.delete(optional.get());
+            bookRepository.delete(optional.get());
             return ResponseEntity.ok().build();
         }
 

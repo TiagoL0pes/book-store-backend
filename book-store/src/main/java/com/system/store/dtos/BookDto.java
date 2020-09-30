@@ -26,7 +26,7 @@ public class BookDto {
     public static Collection<BookDto> toList(Collection<Book> collection) {
         return collection
                 .stream()
-                .map(book -> new BookDto(book))
+                .map(BookDto::new)
                 .collect(Collectors.toList());
     }
 }

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookRepository extends MongoRepository<Book, ObjectId> {
 
-    public Book findByTitle(String title);
+    Book findByTitle(String title);
 
     @Query("{title : :#{#filter.title}}")
-    public Book findByTitle(@Param("filter") BookFilter filter);
+    Book findByTitle(@Param("filter") BookFilter filter);
 }

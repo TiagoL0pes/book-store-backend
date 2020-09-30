@@ -13,6 +13,7 @@ public class UserTemplate implements TemplateLoader {
     @Override
     public void load() {
     	ObjectId id = new ObjectId();
+
         Fixture.of(User.class).addTemplate(MOCK, new Rule() {{
             add("id", id);
             add("email", "email@email.com");
